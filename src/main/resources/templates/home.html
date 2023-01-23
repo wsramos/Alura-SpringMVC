@@ -5,20 +5,22 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div>Nome do Produto</div>
-	<div>Valor: <span></span>200,99</div>
-	<div>Data da entrega: <span>10/02/2020</span></div>
-	
-	<div>Produto</div>
-	<div>url do Produto</div>
-	
-	<div>Descricao</div>
-	<div>
-		<textarea rows="" cols="">Descricao do pedido</textarea>
-	</div>
-	
-	<div>
-		<img src=""/>
+	<div th:each="pedido : ${pedidos}">
+		<div th:text="${pedido.nomeProduto}">Nome do Produto</div>
+		<div>Valor: <span th:text="${pedido.valorNegociado}">200,99</span></div>
+		<div>Data da entrega: <span th:text="${pedido.dataDaEntrega}">10/02/2020</span></div>
+		
+		<div>Produto</div>
+		<div><input th:value="${pedido.urlProduto}" value="url do produto"></div>
+		
+		<div>Descricao</div>
+		<div>
+			<textarea th:text="${pedido.descricao}" rows="" cols="">Descricao do pedido</textarea>
+		</div>
+		
+		<div>
+			<img th:src="${pedido.urlImagem}" src=""/>
+		</div>
 	</div>
 </body>
 </html>
