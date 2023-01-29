@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <head th:replace="~{base :: head('MUDI - Login')}"></head>
+    <body>
+        <div class="container text-center">
+        	<div class="mb-3">
+		        <div th:if="${param.error}">
+		            Invalid username and password.
+		        </div>
+		        <div th:if="${param.logout}">
+		            You have been logged out.
+		        </div>
+		    </div>
+		    
+	        <form th:action="@{/login}" method="post">
+	            <div class="mb-3">
+	            	<label for="userName" class="form-label"> 
+	            	User Name :
+	            	<input type="text" class="form-control" id="userName" name="username"/> </label> 
+	            </div>
+	            <div>
+	            	<label for="password" class="form-label"> Password: 
+	            	<input type="password" class="form-control" id="password" name="password"/> </label>
+	            </div>
+	            <div class="mb-3">
+	            	<button class="btn btn-primary" type="submit">Login</button>
+	            </div>
+	        </form>
+        </div>
+    </body>
+</html>
