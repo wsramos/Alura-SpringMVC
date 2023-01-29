@@ -16,12 +16,14 @@
 	</style>
 </head>
 <th:block th:fragment="navLogo">
-	<div th:replace="'sec:authorize=isAuthenticated()' ? ~{base :: navLogout} : ~{base :: navLogin} "></div>
+	<div th:case="true" th:replace="${session.user} ? ~{base :: navLogin} : ~{base :: navLogout}"></div>
 </th:block>
 
 <div th:fragment="navLogin" class="logo-container mb-3 p-3 d-flex justify-content-between">
 	<span class="logo">mudi</span>
-	<span class="mt-3">login</span>
+	<form class="mt-2" th:action="@{/login}" method="post">
+		<button type="submit" class="btn btn-light">Login</button>
+	</form> 
 </div>
 
 <div th:fragment="titulo(valor)" class="h-100 p-5 text-bg-dark">

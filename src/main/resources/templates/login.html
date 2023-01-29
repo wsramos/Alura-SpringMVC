@@ -2,30 +2,60 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
     <head th:replace="~{base :: head('MUDI - Login')}"></head>
     <body>
-        <div class="container text-center">
-        	<div class="mb-3">
-		        <div th:if="${param.error}">
-		            Invalid username and password.
-		        </div>
-		        <div th:if="${param.logout}">
-		            You have been logged out.
-		        </div>
-		    </div>
-		    
-	        <form th:action="@{/login}" method="post">
-	            <div class="mb-3">
-	            	<label for="userName" class="form-label"> 
-	            	User Name :
-	            	<input type="text" class="form-control" id="userName" name="username"/> </label> 
-	            </div>
-	            <div>
-	            	<label for="password" class="form-label"> Password: 
-	            	<input type="password" class="form-control" id="password" name="password"/> </label>
-	            </div>
-	            <div class="mb-3">
-	            	<button class="btn btn-primary" type="submit">Login</button>
-	            </div>
-	        </form>
+    	<div th:replace="~{base :: navLogo} "></div>
+        <div class="container">
+        
+        	<div th:replace="~{base :: titulo('Login')}"></div>
+        	
+        	<div class="card">
+        	<div class="card-body">
+        		
+			        	<div th:if="${param.error} OR ${param.logout}" th:classappend="mb-3">
+					        <div th:if="${param.error}" th:classappend="'text-danger'">
+					            Invalid username and password.
+					        </div>
+					        <div th:if="${param.logout}" th:classappend="'text-warning'" >
+					            You have been logged out.
+					        </div>
+					    </div>
+					    
+				        <form class=" row g-3 needs-validation" th:action="@{/login}" method="post" novalidate>
+				            <div class="mb-3">
+				            	<label for="userName" class="form-label"> 
+				            	User Name :</label>
+				            	<input type="text" class="form-control" id="userName" name="username" required/>  
+				            </div>
+				            <div class="mb-3">
+				            	<label for="password" class="form-label"> Password: </label>
+				            	<input type="password" class="form-control" id="password" name="password" required/> 
+				            </div>
+				            <div class="mb-3">
+				            	<button class="btn btn-primary" type="submit">Login</button>
+				            </div>
+				        </form>
+
+	        </div>
+	        </div>
         </div>
+    	<script>
+    	(() => {
+    		  'use strict'
+
+    		  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    		  const forms = document.querySelectorAll('.needs-validation')
+
+    		  // Loop over them and prevent submission
+    		  Array.from(forms).forEach(form => {
+    		    form.addEventListener('submit', event => {
+    		      if (!form.checkValidity()) {
+    		        event.preventDefault()
+    		        event.stopPropagation()
+    		      }
+
+    		      form.classList.add('was-validated')
+    		    }, false)
+    		  })
+    		})()
+    	</script>
     </body>
 </html>
