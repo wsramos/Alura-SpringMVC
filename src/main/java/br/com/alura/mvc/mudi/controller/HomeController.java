@@ -15,7 +15,7 @@ import br.com.alura.mvc.mudi.model.StatusPedido;
 import br.com.alura.mvc.mudi.repositories.PedidoRepository;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("home")
 public class HomeController {
 
 	@Autowired
@@ -28,7 +28,7 @@ public class HomeController {
 		return "home";
 	}
 	
-	@GetMapping("home/{status}")
+	@GetMapping("/{status}")
 	public String porStatus(@PathVariable("status") String status, Model model) {
 		List<Pedido> pedidos = pedidoRepository.findByStatus(StatusPedido.valueOf(status.toUpperCase()));
 		model.addAttribute("pedidos", pedidos);
