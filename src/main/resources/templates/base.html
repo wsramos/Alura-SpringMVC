@@ -15,8 +15,10 @@
 	    }
 	</style>
 </head>
+
 <th:block th:fragment="navLogo">
-	<div th:case="true" th:replace="${session.user} ? ~{base :: navLogin} : ~{base :: navLogout}"></div>
+	<div sec:authorize="isAuthenticated()" th:replace="~{base :: navLogout}"></div>
+	<div sec:authorize="!isAuthenticated()" th:replace=" ~{base :: navLogin}"></div>
 </th:block>
 
 <div th:fragment="navLogin" class="logo-container mb-3 p-3 d-flex justify-content-between">
@@ -25,17 +27,13 @@
 		<button type="submit" class="btn btn-light">Login</button>
 	</form> 
 </div>
-
-<div th:fragment="titulo(valor)" class="h-100 p-5 text-bg-dark">
-    <h1 class="display-5 m-3" th:text="${valor}"></h1>
-</div>
 <div th:fragment="navLogout" class="logo-container mb-3 p-3 d-flex justify-content-between">
 	<span class="logo">mudi</span>
-	<!--<h1 th:inline="text">Hello 
-		 <span th:remove="tag" sec:authentication="name">thymeleaf</span>! 
-	</h1>-->
 	 <form class="mt-2" th:action="@{/logout}" method="post">
 		<button type="submit" class="btn btn-light">Logout</button>
 	</form> 
-	
+</div>
+
+<div th:fragment="titulo(valor)" class="h-100 p-5 text-bg-dark">
+    <h1 class="display-5 m-3" th:text="${valor}"></h1>
 </div>
