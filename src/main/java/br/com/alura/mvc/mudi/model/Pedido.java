@@ -6,11 +6,16 @@ import java.time.LocalDate;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter @Setter
 public class Pedido {
 
 	@Id
@@ -26,61 +31,8 @@ public class Pedido {
 
 	@Enumerated(EnumType.STRING)
 	private StatusPedido status;
-
-	public String getNomeProduto() {
-		return nomeProduto;
-	}
-
-	public void setNomeProduto(String nomeProduto) {
-		this.nomeProduto = nomeProduto;
-	}
-
-	public BigDecimal getValorNegociado() {
-		return valorNegociado;
-	}
-
-	public void setValorNegociado(BigDecimal valorNegociado) {
-		this.valorNegociado = valorNegociado;
-	}
-
-	public LocalDate getDataDaEntrega() {
-		return dataDaEntrega;
-	}
-
-	public void setDataDaEntrega(LocalDate dataDaEntrega) {
-		this.dataDaEntrega = dataDaEntrega;
-	}
-
-	public String getUrlProduto() {
-		return urlProduto;
-	}
-
-	public void setUrlProduto(String urlProduto) {
-		this.urlProduto = urlProduto;
-	}
-
-	public String getUrlImagem() {
-		return urlImagem;
-	}
-
-	public void setUrlImagem(String urlImagem) {
-		this.urlImagem = urlImagem;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public StatusPedido getStatus() {
-		return status;
-	}
-
-	public void setStatus(StatusPedido status) {
-		this.status = status;
-	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private User user;
 
 }

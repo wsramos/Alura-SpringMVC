@@ -1,5 +1,6 @@
 package br.com.alura.mvc.mudi.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +23,15 @@ public class HomeController {
 	private PedidoRepository pedidoRepository;
 
 	@GetMapping
-	public String home(Model model) {
-		List<Pedido> pedidos = pedidoRepository.findAll();
+	public String home(Model model, Principal principal) {
+		List<Pedido> pedidos = pedidoRepository.findAllByUsuario(principal.getName());
 		model.addAttribute("pedidos", pedidos);
 		return "home";
 	}
 	
 	@GetMapping("/{status}")
-	public String porStatus(@PathVariable("status") String status, Model model) {
-		List<Pedido> pedidos = pedidoRepository.findByStatus(StatusPedido.valueOf(status.toUpperCase()));
+	public String porStatus(@PathVariable("status") String status, Model model, Principal principal) {
+		List<Pedido> pedidos = pedidoRepository.findByStatus(StatusPedido.valueOf(status.toUpperCase()), principal.getName());
 		model.addAttribute("pedidos", pedidos);
 		model.addAttribute("status", status);
 		return "home";
