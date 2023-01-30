@@ -1,20 +1,28 @@
 package br.com.alura.mvc.mudi;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+/*import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;*/
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+/*import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;*/
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-
+	@Autowired 
+	DataSource dataSource;
+	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
@@ -24,23 +32,38 @@ public class WebSecurityConfig {
 			)
 			.formLogin((form) -> form
 				.loginPage("/login")
+				.defaultSuccessUrl("/home", true)
 				.permitAll()
 			)
 			.logout((logout) -> logout.permitAll());
-
+		
 		return http.build();
 	}
-
-	@Bean
-	public UserDetailsService userDetailsService() {
-		UserDetails user =
-			 User.withDefaultPasswordEncoder()
-				.username("will")
-				.password("password")
-				.roles("USER")
-				.build();
-
-		return new InMemoryUserDetailsManager(user);
+	
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.jdbcAuthentication()
+			.dataSource(dataSource)
+			.passwordEncoder(passwordEncoder());
 	}
+	
+	
+	/* Cria usuário no banco de dados
+	 * @Bean UserDetailsManager users(DataSource dataSource) {
+	 * 
+	 * UserDetails user = User.builder() .username("user2")
+	 * .password(passwordEncoder().encode("password")) .roles("ADM") .build();
+	 * 
+	 * JdbcUserDetailsManager users = new JdbcUserDetailsManager(this.dataSource);
+	 * users.createUser(user);
+	 * 
+	 * return users; }
+	 */
+	 
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+	        return new BCryptPasswordEncoder(16);   
+	}	 
+	 
 
 }
