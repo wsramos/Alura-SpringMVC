@@ -53,14 +53,15 @@ public class WebSecurityConfig  {
 	 * 
 	 * return users; }
 	 */
+	
+	//Carrega os usuários do banco
 	@Bean
     public UserDetailsManager users(DataSource dataSource) {
-        
         JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
-        
         return users;
     }
 	
+	//Define o Encriptador padrão
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 	        return new BCryptPasswordEncoder(16);   
