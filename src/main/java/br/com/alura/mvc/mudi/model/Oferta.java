@@ -3,7 +3,7 @@ package br.com.alura.mvc.mudi.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -28,6 +28,6 @@ public class Oferta {
 	private String comentario;
 	
 	@ManyToOne( fetch = FetchType.LAZY)
-	@JsonBackReference
+	@JsonManagedReference
 	private Pedido pedido;
 }
