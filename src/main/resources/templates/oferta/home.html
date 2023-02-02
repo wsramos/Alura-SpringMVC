@@ -1,56 +1,63 @@
 <!DOCTYPE html>
 <html>
-	<head th:replace="~{base :: head('MUDI - Últimos Pedidos')}"></head>
-	<body>
+<head th:replace="~{base :: head('MUDI - Ofertas')}"></head>
+<body onload="onLoad()">
+
+	<div th:replace="~{base :: navLogo} "></div>
 	
-		<div th:replace="~{base :: navLogo} ">
-		</div>
-		
-		<div class="container">
-		
-			
-			<div th:replace="~{base :: titulo('Últimos Pedidos')}" class="mb-3"></div>
-			
-			
-			<div class="card mt-3" th:each="pedido : ${pedidos}">
-			
-				
-					
-				<div class="card-header alert alert-dark" th:text="${pedido.nomeProduto}">Nome do Produto</div>
-				
-				
-				<div class="card-body">
-					
-					<div class="row">
-						<div class="col-12 col-sm-8 mb-3">
-							
-							<div class="row">
-								<div class="col-md-5">Valor: <span th:if="${pedido.valorNegociado} != null" th:text="${'R$ '+ #numbers.formatDecimal(pedido.valorNegociado,3,'POINT',2,'COMMA')}">200,99</span></div>
-								<div class="col-md-7">Data da entrega: <span th:text="${#temporals.format(pedido.dataDaEntrega, 'dd/MM/yyyy')}">10/02/2020</span></div>
-							</div>
-							
-							<div>Produto</div>
-							<div><input class="form-control" th:value="${pedido.urlProduto}" value="url do produto"></div>
-							
-							<div>Descricao</div>
-							<div>
-								<textarea class="form-control" th:text="${pedido.descricao}" rows="" cols="">Descricao do pedido</textarea>
-							</div>
+	<div class="container" id="ofertas">
+		<div th:replace="~{base :: titulo('Faça sua Oferta!')}" class="mb-3"></div>
+		<div class="card mt-3" v-for="pedido in pedidos">
+			<div class="card-header alert alert-dark">{{pedido.nomeProduto}}</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-12 col-sm-8 mb-3">
+						<div class="row">
+							<div class="col-md-5"> Valor: <input /></div>
+							<div class="col-md-7"> Data da entrega: <input /></div>
 						</div>
-					
-					
-						<div class="col-12 col-sm-4">
-							<div>
-								<img class="img-thumbnail" th:src="${pedido.urlImagem}" src=""/>
-							</div>
-						</div>
-						
+						<div>Produto</div>
+						<div><a v-bind:href="pedido.urlProduto">{{pedido.nomeProduto}}</a></div>
+						<div>Descricao</div>
+						<div><textarea class="form-control">{{pedido.descricao}}</textarea></div>
 					</div>
-					
+					<div class="col-12 col-sm-4">
+						<div><img class="img-thumbnail" v-bind:src="pedido.urlImagem"/></div>
+					</div>
 				</div>
-				
 			</div>
-			
 		</div>
-	</body>
+	</div>
+
+	<script>
+		function onLoad() {
+			var app = new Vue({
+				el : '#ofertas',
+				data : {
+					pedidos : [ {
+						  "id" : 21,
+						  "nomeProduto" : "Tablet Samsung Galaxy Tab A A7 Lite",
+						  "valorNegociado" : null,
+						  "dataDaEntrega" : null,
+						  "urlProduto" : "https://www.mercadolivre.com.br/tablet-samsung-galaxy-tab-a-a7-lite-sm-t220-87-32gb-cinza-e-3gb-de-memoria-ram/p/MLB18367186?pdp_filters=category:MLB99889#searchVariation=MLB18367186&position=3&search_layout=grid&type=product&tracking_id=b6e00903-6c29-408d-bb72-716f93047b88",
+						  "urlImagem" : "https://http2.mlstatic.com/D_NQ_NP_872044-MLA47146625522_082021-O.webp",
+						  "descricao" : null,
+						  "status" : "AGUARDANDO"
+						}, {
+						  "id" : 3,
+						  "nomeProduto" : "Xiaomi Redmi Note 11",
+						  "valorNegociado" : 1349.9,
+						  "dataDaEntrega" : [ 2023, 1, 22 ],
+						  "urlProduto" : "https://www.amazon.com.br/Xiaomi-Redmi-Note-11-Graphite/dp/B09QSB4N2C?ref_=Oct_Oct_d_otopr_d_16243803011_0&pd_rd_w=QeMru&content-id=amzn1.sym.ecc25cc1-ec38-4678-aabf-b9da0181edb4&pf_rd_p=ecc25cc1-ec38-4678-aabf-b9da0181edb4&pf_rd_r=G8P92N9VX3PW1ATCXQAY&pd_rd_wg=SYuGc&pd_rd_r=f9f831ad-4dd3-4914-bb88-3916a15bf40c&pd_rd_i=B09QSB4N2C",
+						  "urlImagem" : "https://m.media-amazon.com/images/I/51e3KdrHuCL._AC_SL1080_.jpg",
+						  "descricao" : "Lorem Ipsum",
+						  "status" : "AGUARDANDO"
+						} ]
+				}
+			});
+		}
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+	
+</body>
 </html>
