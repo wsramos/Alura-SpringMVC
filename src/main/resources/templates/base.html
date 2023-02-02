@@ -18,30 +18,32 @@
 
 <div th:fragment="navLogo">
 
-		<div class="row logo-container p-3">
-			<div class="col-6">
-				<span class="logo">mudi</span>
-			</div>
-			<div sec:authorize="!isAuthenticated()" class="col-6 mt-2 d-flex justify-content-end ps-2">
-				<a href="@{/login}"><button type="submit" class="btn btn-light">Login</button></a>
+		<div class="container-fluid">
+			<div class="row logo-container p-3">
+				<div class="col-6">
+					<span class="logo">mudi</span>
+				</div>
+				<div sec:authorize="!isAuthenticated()" class="col-6 mt-2 d-flex justify-content-end">
+					<a href="@{/login}"><button type="submit" class="btn btn-light">Login</button></a>
+				</div>
+				
+				 <div sec:authorize="isAuthenticated()" class="col-6 mt-2 d-flex justify-content-end">
+					 <form th:action="@{/logout}" method="post">
+						<button type="submit" class="btn btn-light">Logout</button>
+					</form> 
+				</div>
 			</div>
 			
-			 <div sec:authorize="isAuthenticated()" class="col-6 mt-2 d-flex justify-content-end ps-2">
-				 <form th:action="@{/logout}" method="post">
-					<button type="submit" class="btn btn-light">Logout</button>
-				</form> 
+			<div sec:authorize="isAuthenticated()" class="row container-fluid">
+				<div class="col">
+					<nav class="nav">
+					  <a class="nav-link" th:href="@{/home}">Home</a>
+					  <a class="nav-link" th:href="@{/usuario/pedido}">Meus Pedidos</a>
+					  <a class="nav-link" th:href="@{/oferta}">Faça sua Oferta</a>
+					</nav>
+				</div>
 			</div>
 		</div>
-		<div sec:authorize="isAuthenticated()" class="row">
-			<div class="col">
-				<nav class="nav">
-				  <a class="nav-link" th:href="@{/home}">Home</a>
-				  <a class="nav-link" th:href="@{/usuario/pedido}">Meus Pedidos</a>
-				  <a class="nav-link" th:href="@{/oferta}">Faça sua Oferta</a>
-				</nav>
-			</div>
-		</div>
-	
 </div>
 
 <div th:fragment="titulo(valor)" class="h-100 p-5 text-bg-dark mt-3">
