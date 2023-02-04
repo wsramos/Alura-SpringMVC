@@ -19,7 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig  {
+public class WebSecurityConfig {
 
 	@Autowired 
 	DataSource dataSource;
@@ -69,5 +69,4 @@ public class WebSecurityConfig  {
 	        return new BCryptPasswordEncoder(16);   
 	}	 
 	 
-
 }
